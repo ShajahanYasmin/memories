@@ -1,0 +1,48 @@
+<%- include("../includes/header") %> 
+
+
+<link rel="stylesheet" href="../css/login_register.css" />
+<link rel="stylesheet" href="../css/style.css" />
+<link
+rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+/>
+<script defer src="../js/script.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<body>
+      <%- include("../includes/navigation") %>
+      <div class="wrap">
+        <div class="container">
+            <form action="/register" method="post">
+              <div class="title">Register</div>
+              <div class="input-box underline">
+                <input type="text" name="name" placeholder="Enter Your Full name" required />
+                <div class="underline"></div>
+              </div>
+              <div class="input-box underline">
+                <input type="text" name="email" placeholder="Enter Your Email" required />
+                <div class="underline"></div>
+              </div>
+              <div class="input-box">
+                <input type="password" name="password" placeholder="Enter Your Password" required />
+                <div class="underline"></div>
+              </div>
+              <div class="input-box">
+                <input type="password" name="confirmPassword" placeholder="Confirm your Password" required />
+                <div class="underline"></div>
+              </div>
+              <div class="input-box button">
+                <input type="submit" name="submit" value="Continue" />
+              </div>
+            </form>
+            <div class="option">
+              Already have an account <a href="/login">click here</a>
+            </div>
+            <a class="popupClose" href="/">x</a>
+          </div>
+          <% if(message) {%>
+            <h4 class="alert alert-danger"><%=message %></h4>
+            <%}%>
+      </div>
+      <%- include("../includes/end") %>

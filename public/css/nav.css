@@ -1,0 +1,32 @@
+.logo {
+  padding: 3rem;
+}
+.logo__image {
+  height: 4rem;
+}
+
+.nav__box {
+  display: flex;
+  justify-content: space-between;
+  list-style-type: none;
+}
+
+.nav__item {
+  margin-right: 4rem;
+}
+
+.nav__link {
+  text-decoration: none;
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-grey-dark-1);
+  transition: all 0.2s;
+  padding: 1rem 2rem;
+}
+.nav__link:hover {
+  background-color: var(--color-primary);
+  color: var(--color-grey-light-1);
+}
+.active {
+  color: var(--color-primary);
+}

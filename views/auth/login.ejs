@@ -1,0 +1,67 @@
+<%- include("../includes/header") %> 
+
+
+<link rel="stylesheet" href="../css/login_register.css" />
+
+
+<script defer src="../js/script.js"></script>
+
+</head>
+<body>
+      <%- include("../includes/navigation") %>
+      <div class="wrap">
+    <div class="operations">
+      <div class="operations__tab--container">
+        
+        <button
+          class="btn btn--white operations__tab operations__tab--1 operations__tab--active"
+          data-tab="1"
+        >
+          Customer
+        </button>
+        <button class="btn btn--white operations__tab operations__tab--1" data-tab="2">
+          Admin
+        </button>
+      </div>
+      <div
+        class="container operations__content operations__content--1 operations__content--active"
+      >
+        <form action="/login" method="POST">
+          <div class="title">Login</div>
+          <div class="input-box underline">
+            <input type="email" name="email" placeholder="Enter Your Email" required />
+            <div class="underline"></div>
+          </div>
+          <div class="input-box">
+            <input type="password" name="password" placeholder="Enter Your Password" required />
+            <div class="underline"></div>
+          </div>
+          <div class="input-box button">
+            <input type="submit" name="submit" value="Continue" />
+          </div>
+        </form>
+        <div class="option">
+          Don't you have account <a href="/register">click here</a>
+        </div>
+        <a class="popupClose" href="/">x</a>
+      </div>
+      <div class="container operations__content operations__content--2">
+        <form action="/admin_login" method="POST">
+          <div class="title">Login</div>
+          <div class="input-box underline">
+            <input type="text" name="adminemail" placeholder="Enter Your Email" required />
+            <div class="underline"></div>
+          </div>
+          <div class="input-box">
+            <input type="password" name="adminPassword" placeholder="Enter Your Password" required />
+            <div class="underline"></div>
+          </div>
+          <div class="input-box button">
+            <input type="submit" name="" value="Continue" />
+          </div>
+        </form>
+        <a class="popupClose" href="/">x</a>
+      </div>
+    </div>
+</div>
+<%- include("../includes/end") %>
