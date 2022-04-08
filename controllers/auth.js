@@ -43,13 +43,13 @@ exports.postAdminLogin = (req, res, next) => {
       const log = user[0][0];
       console.log(log);
       if (!log) {
-        return res.redirect("/admin_login");
+        return res.redirect("/admin");
       }
       if (log.admin_password === adminPassword) {
         req.session.isLoggedIn = true;
         // req.session.user = log;
         req.session.loginrole = "admin";
-        return res.redirect("/");
+        return res.redirect("/admin");
       }
       return res.redirect("/login");
     })

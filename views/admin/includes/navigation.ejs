@@ -10,25 +10,25 @@
       <ul class="nav__box">
         <li class="nav__item">
           <a
-            class="<%= path === '/' ? 'active' : '' %> nav__link"
-            href="/"
+            class="<%= path === '/admin' ? 'active' : '' %> nav__link"
+            href="/admin"
             
-            >Home
+            >Home  Page
           </a>
         </li>
         <li class="nav__item">
           <a
-            class="<%= path === '/bookings' ? 'active' : '' %> nav__link"
-            href="/bookings"
+            class="<%= path === 'admin/bookings' ? 'active' : '' %> nav__link"
+            href="admin/bookings"
             
-            >Bookings Page
+            >Bookings
           </a>
         </li>
 
         <li class="nav__item">
           <a
-            class="<%= path === '/gallery' ? 'active' : '' %> nav__link"
-            href="/gallery"
+            class="<%= path === 'admin/gallery' ? 'active' : '' %> nav__link"
+            href="admin/gallery"
             
             >Gallery
           </a>
@@ -36,8 +36,8 @@
 
         <li class="nav__item">
           <a
-            class="<%= path === '/feedback' ? 'active' : '' %> nav__link"
-            href="/feedback"
+            class="<%= path === 'admin/feedback' ? 'active' : '' %> nav__link"
+            href="admin/feedback"
             
             >Feedback
           </a>
@@ -71,14 +71,14 @@
             <button onclick="myFunction()" class="dropbtn"><%= role%></button>
             <div id="myDropdown" class="dropdown-content">
               <a
-            class="<%= path === '/cart' ? 'active' : '' %> nav__link"
-            href="/cart"
+            class="<%= path === 'admin/cart' ? 'active' : '' %> nav__link"
+            href="admin/cart"
             
             >Cart
           </a>
           <a
-          class="<%= path === '/orders' ? 'active' : '' %> nav__link"
-          href="/orders"
+          class="<%= path === 'admin/orders' ? 'active' : '' %> nav__link"
+          href="admin/orders"
           
           >Orders
         </a>

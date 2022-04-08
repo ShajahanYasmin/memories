@@ -1,10 +1,8 @@
 const tabs = document.querySelectorAll(".operations__tab");
 const tabsContainer = document.querySelector(".operations__tab--container");
 const tabsContent = document.querySelectorAll(".operations__content");
-// console.log(tabsContent);
 tabsContainer.addEventListener("click", function (e) {
   const clicked = e.target.closest(".operations__tab");
-  // console.log(clicked);
 
   if (!clicked) return;
   tabs.forEach((t) => t.classList.remove("operations__tab--active"));

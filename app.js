@@ -13,7 +13,7 @@ const app = express();
 
 app.set("view engine", "ejs");
 app.set("views", "views");
-
+app.use(cors);
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/product");
 const authRoutes = require("./routes/auth");
@@ -35,7 +35,8 @@ const sessionStore = new mySqlStore(
 );
 
 app.use(bodyParser.urlencoded({ extended: false }));
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
+app.use("/admin", express.static(path.join(__dirname, "public")));
 
 app.use(
   session({

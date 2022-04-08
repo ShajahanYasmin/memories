@@ -1,0 +1,50 @@
+<%- include("./includes/header") %> 
+<link rel="stylesheet" href="../css/card.css" />
+
+</head>
+<body>
+
+<%- include("./includes/navigation") %>
+<section class="section-tours" id=" section-tours">
+    <div class="u-center-text u-margin-bottom-big">
+      <h2 class="heading-secondary">Most popular event session</h2>
+    </div>
+    <div class="grid">
+      <% if (products.length > 0) { %>
+        <% products.forEach(p => { %>
+        <div class="card">
+            <div class="card__side card__side--front">
+              <div class="card__picture card__picture-1" style="--img:url(../img/<%= p.product_img %>);">&nbsp;</div>
+              <h4 class="card__heading">
+                <span class="card__heading-span card__heading-span--1"
+                  ><%= p.product_title%></span>
+              </h4>
+              <div class="card__details">
+                <ul>
+                  <li>3 day tour</li>
+                  <li>Up to 30 people</li>
+                  <li>2 tour guides</li>
+                  <li>Sleep in cozy hotels</li>
+                  <li>Difficulty:easy</li>
+                </ul>
+              </div>
+            </div>
+            <div class="card__side card__side--back card__side--back-1">
+              <div class="card__cta">
+                <div class="card__price-box">
+                  <p class="card__price-only">Only</p>
+                  <div class="card__price-value">$279</div>
+                </div>
+                <% if (!isAuthenticated) { %>
+                  
+                  <%- include('../includes/add-to-cart') %>
+              <% } %>
+                <!-- <a href="/bookform" class="btn">Book now!</a> -->
+              </div>
+            </div>
+          </div>
+          <% })%>
+          <% } %>
+    </div>
+</section>
+<%- include("./includes/end") %>

@@ -1,5 +1,5 @@
 const Product = require("../models/product");
-const { validationResult } = require("express-validator");
+// const { validationResult } = require("express-validator");
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
     .then((product) => {
@@ -13,6 +13,7 @@ exports.getProducts = (req, res, next) => {
     })
     .catch((err) => console.log(err));
 };
+
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -62,7 +63,7 @@ exports.postAddProduct = (req, res, next) => {
     .then((result) => {
       // console.log(result);
       console.log("Created Product");
-      res.redirect("/");
+      res.redirect("/admin");
     })
     .catch((err) => {
       // res.redirect("/");
@@ -138,4 +139,34 @@ exports.postDeleteProduct = (req, res, next) => {
       error.httpStatusCode = 500;
       return next(error);
     });
+};
+
+exports.getIndex = (req, res, next) => {
+  res.render("admin/home", {
+    path: "/admin",
+    isAuthenticated: req.session.isLoggedIn,
+    role: req.session.loginrole,
+  });
+  console.log(req.session);
+};
+exports.getGallery = (req, res, next) => {
+  // console.log(req.session);
+  res.render("admin/gallery", {
+    path: "/gallery",
+    isAuthenticated: req.session.isLoggedIn,
+    role: req.session.loginrole,
+  });
+};
+exports.getBookings = (req, res, next) => {
+  Product.fetchAll()
+    .then((product) => {
+      res.render("admin/bookings", {
+        path: "/bookings",
+        isAuthenticated: req.session.isLoggedIn,
+        role: req.session.loginrole,
+        products: product[0],
+        // products: Product.fetchAll()[0][0],
+      });
+    })
+    .catch((err) => console.log(err));
 };

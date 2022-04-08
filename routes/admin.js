@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 
 const adminController = require("../controllers/admin");
-const { body } = require("express-validator/check");
+// const { body } = require("express-validator/check");
 const isAuth = require("../middleware/is-auth");
 
 const router = express.Router();
@@ -12,7 +12,14 @@ app.use(express.static(path.join(__dirname, "public")));
 // router.get("/add-product", adminController.getAddProduct);
 
 // /admin/products => GET
+router.get("/admin", adminController.getIndex);
 router.get("/add-product", isAuth, adminController.getAddProduct);
+
+router.get("/bookings", adminController.getBookings);
+
+router.get("/gallery", adminController.getGallery);
+
+// router.get("/cart", adminController.getCart);
 
 router.get("/products", adminController.getProducts);
 router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
@@ -22,11 +29,11 @@ router.post("/delete-product", isAuth, adminController.postDeleteProduct);
 // /admin/add-product => POST
 router.post(
   "/add-product",
-  [
-    body("title").isString().isLength({ min: 3 }).trim(),
-    body("price").isFloat(),
-    body("description").isLength({ min: 5, max: 400 }).trim(),
-  ],
+  // [
+  //   body("title").isString().isLength({ min: 3 }).trim(),
+  //   body("price").isFloat(),
+  //   body("description").isLength({ min: 5, max: 400 }).trim(),
+  // ],
   adminController.postAddProduct
 );
 
