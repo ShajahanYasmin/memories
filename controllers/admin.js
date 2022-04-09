@@ -8,12 +8,12 @@ exports.getProducts = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn,
         prods: product[0],
         role: req.session.loginrole,
+        user: req.session.loginuser,
         // products: Product.fetchAll()[0][0],
       });
     })
     .catch((err) => console.log(err));
 };
-
 
 exports.getAddProduct = (req, res, next) => {
   res.render("admin/edit-product", {
@@ -22,6 +22,8 @@ exports.getAddProduct = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     editing: false,
     role: req.session.loginrole,
+
+    user: req.session.user,
     hasError: false,
     errorMessage: null,
     validationErrors: [],
@@ -29,11 +31,11 @@ exports.getAddProduct = (req, res, next) => {
 };
 exports.postAddProduct = (req, res, next) => {
   const title = req.body.title;
-  const imageUrl = req.body.imageUrl;
+  const imageUrl = req.file;
   const price = req.body.price;
   const description = req.body.description;
   console.log(imageUrl);
-  const errors = validationResult(req);
+  // const errors = validationResult(req);
 
   // if (!errors.isEmpty()) {
   //   console.log(errors.array());
@@ -46,6 +48,7 @@ exports.postAddProduct = (req, res, next) => {
     // errorMessage: errors.array()[0].msg,
     // products: product[0],
     role: req.session.loginrole,
+    user: req.session.user,
     // validationErrors: errors.array(),
     isAuthenticated: req.session.isLoggedIn,
   });
@@ -93,6 +96,7 @@ exports.getEditProduct = (req, res, next) => {
         validationErrors: [],
         isAuthenticated: req.session.isLoggedIn,
         role: req.session.loginrole,
+        user: req.session.loginuser,
         Id: prodId,
       });
     })
@@ -119,6 +123,7 @@ exports.postEditProduct = (req, res, next) => {
         products: product[0][0],
         hasError: true,
         role: req.session.loginrole,
+        user: req.session.loginuser,
         isAuthenticated: req.session.isLoggedIn,
       });
       Product.update(prodId, title, price, imageUrl, description);
@@ -146,6 +151,7 @@ exports.getIndex = (req, res, next) => {
     path: "/admin",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
+    user: req.session.loginuser,
   });
   console.log(req.session);
 };
@@ -155,6 +161,7 @@ exports.getGallery = (req, res, next) => {
     path: "/gallery",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
+    user: req.session.loginuser,
   });
 };
 exports.getBookings = (req, res, next) => {
@@ -164,6 +171,7 @@ exports.getBookings = (req, res, next) => {
         path: "/bookings",
         isAuthenticated: req.session.isLoggedIn,
         role: req.session.loginrole,
+        user: req.session.loginuser,
         products: product[0],
         // products: Product.fetchAll()[0][0],
       });

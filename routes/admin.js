@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, "public")));
 // router.get("/add-product", adminController.getAddProduct);
 
 // /admin/products => GET
-router.get("/admin", adminController.getIndex);
+router.get("/", adminController.getIndex);
 router.get("/add-product", isAuth, adminController.getAddProduct);
 
 router.get("/bookings", adminController.getBookings);

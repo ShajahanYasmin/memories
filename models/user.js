@@ -19,7 +19,7 @@ module.exports = class User {
     return db.execute("select * from users");
   }
   static findByEmail(email) {
-    return db.execute("select email,password from users where email=?", [
+    return db.execute("select name,email,password from users where email=?", [
       email,
     ]);
   }

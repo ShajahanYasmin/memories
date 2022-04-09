@@ -10,6 +10,7 @@ exports.getLogin = (req, res, next) => {
     path: "/login",
     isAuthenticated: isLoggedIn,
     role: req.session.loginrole,
+    user: req.session.loginuser,
   });
 };
 exports.postLogin = (req, res, next) => {
@@ -24,12 +25,14 @@ exports.postLogin = (req, res, next) => {
       }
       if (log.password === password) {
         req.session.isLoggedIn = true;
-        req.session.user = log;
+        req.session.loginuser = log["name"];
         req.session.loginrole = "user";
-        return res.redirect("/");
+        console.log(req.session.user);
+        return res.redirect("/user");
       }
       return res.redirect("/login");
     })
+
     .catch((err) => console.log(err));
   // req.session.isLoggedIn = true;
   // res.redirect("/");
@@ -47,7 +50,7 @@ exports.postAdminLogin = (req, res, next) => {
       }
       if (log.admin_password === adminPassword) {
         req.session.isLoggedIn = true;
-        // req.session.user = log;
+        req.session.loginuser = "admin";
         req.session.loginrole = "admin";
         return res.redirect("/admin");
       }
@@ -67,6 +70,7 @@ exports.getRegister = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
     message: undefined,
+    user: req.session.loginuser,
   });
 };
 exports.postRegister = (req, res, next) => {
@@ -84,6 +88,7 @@ exports.postRegister = (req, res, next) => {
           message: "That email is already in use",
           isAuthenticated: req.session.isLoggedIn,
           role: req.session.loginrole,
+          user: req.session.loginuser,
         });
       } else if (password != confirmPassword) {
         return res.render("auth/register", {
@@ -91,6 +96,7 @@ exports.postRegister = (req, res, next) => {
           message: "Passwords did not match",
           isAuthenticated: req.session.isLoggedIn,
           role: req.session.loginrole,
+          user: req.session.loginuser,
         });
       }
       const user = new User(name, email, password);

@@ -19,7 +19,7 @@
         <li class="nav__item">
           <a
             class="<%= path === 'admin/bookings' ? 'active' : '' %> nav__link"
-            href="admin/bookings"
+            href="/bookings"
             
             >Bookings
           </a>
@@ -28,7 +28,7 @@
         <li class="nav__item">
           <a
             class="<%= path === 'admin/gallery' ? 'active' : '' %> nav__link"
-            href="admin/gallery"
+            href="/gallery"
             
             >Gallery
           </a>
@@ -37,7 +37,7 @@
         <li class="nav__item">
           <a
             class="<%= path === 'admin/feedback' ? 'active' : '' %> nav__link"
-            href="admin/feedback"
+            href="/feedback"
             
             >Feedback
           </a>
@@ -46,11 +46,11 @@
        
         <% if(isAuthenticated && role==='admin') {%>
           <li class="nav__item">
-            <a class="<%= path === 'admin/add-product' ? 'active' : '' %> nav__link" href="admin/add-product">Add Product
+            <a class="<%= path === 'admin/add-product' ? 'active' : '' %> nav__link" href="./add-product">Add Product
             </a>
         </li>
         <li class="nav__item">
-            <a class="<%= path === 'admin/products' ? 'active' : '' %> nav__link" href="admin/products">Admin Products
+            <a class="<%= path === 'admin/products' ? 'active' : '' %> nav__link" href="./products">Admin Products
             </a>
         </li>
     <% } %>
@@ -68,7 +68,7 @@
         
         <li class="nav__item">
           <div class="dropdown">
-            <button onclick="myFunction()" class="dropbtn"><%= role%></button>
+            <button onclick="myFunction()" class="dropbtn"><%=user%></button>
             <div id="myDropdown" class="dropdown-content">
               <a
             class="<%= path === 'admin/cart' ? 'active' : '' %> nav__link"

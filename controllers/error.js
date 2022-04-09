@@ -4,6 +4,7 @@ exports.get404 = (req, res, next) => {
     path: "/404",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
+    user:req.session.loginuser,
   });
 };
 

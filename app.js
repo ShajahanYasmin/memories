@@ -3,6 +3,7 @@ const path = require("path");
 const rootDir = require("./util/path");
 const express = require("express");
 const bodyParser = require("body-parser");
+const multer = require("multer");
 const db = require("./util/database");
 const cors = require("cors");
 
@@ -11,9 +12,19 @@ const errorController = require("./controllers/error");
 const app = express();
 // const db = require("./util/database");
 
+const fileStorage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "images");
+  },
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 app.set("view engine", "ejs");
 app.set("views", "views");
-app.use(cors);
+
+app.use(multer({ dest: "images", storage: fileStorage }).single("image"));
+// app.use(cors);
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/product");
 const authRoutes = require("./routes/auth");

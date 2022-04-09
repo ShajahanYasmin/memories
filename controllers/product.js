@@ -9,6 +9,7 @@ exports.getIndex = (req, res, next) => {
     path: "/",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
+    user:req.session.loginuser,
   });
   console.log(req.session);
 };
@@ -18,6 +19,7 @@ exports.getGallery = (req, res, next) => {
     path: "/gallery",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
+    user:req.session.loginuser,
   });
 };
 exports.getBookings = (req, res, next) => {
@@ -27,6 +29,7 @@ exports.getBookings = (req, res, next) => {
         path: "/bookings",
         isAuthenticated: req.session.isLoggedIn,
         role: req.session.loginrole,
+        user:req.session.loginuser,
         products: product[0],
         // products: Product.fetchAll()[0][0],
       });
@@ -40,6 +43,7 @@ exports.getCart = (req, res, next) => {
         path: "/cart",
         isAuthenticated: req.session.isLoggedIn,
         role: req.session.loginrole,
+        user:req.session.loginuser,
         products: product[0],
         // products: Product.fetchAll()[0][0],
       });

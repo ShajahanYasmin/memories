@@ -35,7 +35,7 @@
                   <p class="card__price-only">Only</p>
                   <div class="card__price-value">$279</div>
                 </div>
-                <% if (!isAuthenticated) { %>
+                <% if (isAuthenticated) { %>
                   
                   <%- include('../includes/add-to-cart') %>
               <% } %>
