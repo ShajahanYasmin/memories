@@ -20,10 +20,26 @@ const fileStorage = multer.diskStorage({
     cb(null, file.originalname);
   },
 });
+const fileFilter = (req, file, cb) => {
+  if (
+    file.mimetype === "image/png" ||
+    file.mimetype === "image/jpg" ||
+    file.mimetype === "image/jpeg"
+  )
+    cb(null, true);
+  else cb(null, false);
+};
+
 app.set("view engine", "ejs");
 app.set("views", "views");
 
-app.use(multer({ dest: "images", storage: fileStorage }).single("image"));
+app.use(
+  multer({
+    dest: "images",
+    storage: fileStorage,
+    fileFilter: fileFilter,
+  }).single("image")
+);
 // app.use(cors);
 const adminRoutes = require("./routes/admin");
 const shopRoutes = require("./routes/product");
@@ -47,6 +63,7 @@ const sessionStore = new mySqlStore(
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, "public")));
+app.use(express.static(path.join(__dirname, "images")));
 app.use("/admin", express.static(path.join(__dirname, "public")));
 
 app.use(
