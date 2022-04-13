@@ -22,6 +22,7 @@ router.get("/gallery", adminController.getGallery);
 // router.get("/cart", adminController.getCart);
 
 router.get("/products", adminController.getProducts);
+router.get("/feedback", adminController.getFeedback);
 router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
 router.post("/edit-product", isAuth, adminController.postEditProduct);
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);

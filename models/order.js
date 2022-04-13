@@ -1,6 +1,3 @@
-// const fs = require("fs");
-// const path = require("path");
-
 const db = require("../util/database");
 
 module.exports = class Product {
@@ -13,7 +10,7 @@ module.exports = class Product {
 
   save() {
     return db.execute(
-      "insert into products (product_title,product_price,product_img,product_description) values(?,?,?,?)",
+      "insert into products (product_id,user_id,quantity,product_img,product_description) values(?,?,?,?)",
       [this.title, this.price, this.imageUrl, this.description]
     );
   }

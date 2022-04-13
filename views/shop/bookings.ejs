@@ -33,11 +33,14 @@
               <div class="card__cta">
                 <div class="card__price-box">
                   <p class="card__price-only">Only</p>
-                  <div class="card__price-value"><%=p.product_img %>/-</div>
+                  <div class="card__price-value"><%=p.product_price %>/-</div>
                 </div>
                 <% if (isAuthenticated) { %>
                   
-                  <%- include('../includes/add-to-cart') %>
+                  <form action="/add-to-cart" method="post">
+                    <input type="hidden" name="id" value="<%=p.product_id%>">
+                    <button class="btn" type="submit">Book now!</button>
+                  </form>
               <% } %>
                 <!-- <a href="/bookform" class="btn">Book now!</a> -->
               </div>

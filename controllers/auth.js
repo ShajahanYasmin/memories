@@ -2,21 +2,20 @@ const User = require("../models/user");
 const Admin = require("../models/admin");
 const db = require("../util/database");
 const hash = require("bcryptjs");
+const Cart = require("../models/cart");
 const { findPassword } = require("../models/user");
 exports.getLogin = (req, res, next) => {
-  //   console.log(req.get("Cookie"));
   const isLoggedIn = req.session.isLoggedIn;
   res.render("auth/login", {
     path: "/login",
     isAuthenticated: isLoggedIn,
     role: req.session.loginrole,
     user: req.session.loginuser,
+    id: req.session.user_id,
   });
 };
 exports.postLogin = (req, res, next) => {
-  //   req.isLoggedIn = true;
-  //   res.setHeader("Set-Cookie", "LoggedIn=true");
-  const { email, password } = req.body;
+  const { user_id, email, password } = req.body;
   User.findByEmail(email)
     .then((user) => {
       const log = user[0][0];
@@ -24,8 +23,10 @@ exports.postLogin = (req, res, next) => {
         return res.redirect("/login");
       }
       if (log.password === password) {
+        console.log(log);
         req.session.isLoggedIn = true;
         req.session.loginuser = log["name"];
+        req.session.user_id = log["user_id"];
         req.session.loginrole = "user";
         console.log(req.session.user);
         return res.redirect("/user");
@@ -34,12 +35,8 @@ exports.postLogin = (req, res, next) => {
     })
 
     .catch((err) => console.log(err));
-  // req.session.isLoggedIn = true;
-  // res.redirect("/");
 };
 exports.postAdminLogin = (req, res, next) => {
-  //   req.isLoggedIn = true;
-  //   res.setHeader("Set-Cookie", "LoggedIn=true");
   const { adminemail, adminPassword } = req.body;
   Admin.findByAdmin(adminemail)
     .then((user) => {
@@ -57,8 +54,6 @@ exports.postAdminLogin = (req, res, next) => {
       return res.redirect("/login");
     })
     .catch((err) => console.log(err));
-  // req.session.isLoggedIn = true;
-  // res.redirect("/");
 };
 exports.postLogout = (req, res, next) => {
   req.session.destroy(() => res.redirect("/"));
@@ -71,6 +66,7 @@ exports.getRegister = (req, res, next) => {
     role: req.session.loginrole,
     message: undefined,
     user: req.session.loginuser,
+    id: req.session.user_id,
   });
 };
 exports.postRegister = (req, res, next) => {
@@ -97,11 +93,17 @@ exports.postRegister = (req, res, next) => {
           isAuthenticated: req.session.isLoggedIn,
           role: req.session.loginrole,
           user: req.session.loginuser,
+          id: req.session.user_id,
         });
       }
       const user = new User(name, email, password);
       user.save();
+      User.findByEmail(email).then((user) => {
+        console.log(user[0][0].user_id);
+        // console.log("session", id);
+        Cart.addCart(user[0][0].user_id).then();
+      });
     })
-    .then(() => res.redirect("/login"))
+    .then(res.redirect("/login"))
     .catch((err) => console.log(err));
 };

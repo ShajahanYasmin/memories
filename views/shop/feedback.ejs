@@ -1,0 +1,28 @@
+<%- include("../includes/header") %> 
+<link rel="stylesheet" href="/css/forms.css" />
+</head>
+<body>
+
+<%- include("../includes/navigation") %>
+<div class="container">
+  <div class="form-div">
+  <form action="/feedback" method="post">
+    <div class="form-control">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          name="email"/>
+      </div>
+      <div class="form-control">
+        <label for="feedback">Feedback</label>
+        <textarea name="content"  rows="5">
+        </textarea>
+        
+      </div>
+      <button class="btn" type="submit">
+         submit
+        </button>
+      </form>
+    </div>
+</div>
+<%- include("../includes/end") %>

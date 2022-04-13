@@ -1,3 +1,4 @@
+const Feedback = require("../models/feedback");
 const Product = require("../models/product");
 // const { validationResult } = require("express-validator");
 exports.getProducts = (req, res, next) => {
@@ -9,6 +10,7 @@ exports.getProducts = (req, res, next) => {
         prods: product[0],
         role: req.session.loginrole,
         user: req.session.loginuser,
+        id:req.session.user_id
         // products: Product.fetchAll()[0][0],
       });
     })
@@ -24,6 +26,7 @@ exports.getAddProduct = (req, res, next) => {
     role: req.session.loginrole,
 
     user: req.session.user,
+    id:req.session.user_id,
     hasError: false,
     errorMessage: null,
     validationErrors: [],
@@ -48,10 +51,10 @@ exports.postAddProduct = (req, res, next) => {
     hasError: true,
     // errorMessage: errors.array()[0].msg,
     // products: product[0],
-    role: req.session.loginrole,
-    user: req.session.user,
-    // validationErrors: errors.array(),
     isAuthenticated: req.session.isLoggedIn,
+    role: req.session.loginrole,
+    user: req.session.loginuser,
+    id:req.session.user_id
   });
 
   const product = new Product(
@@ -61,7 +64,7 @@ exports.postAddProduct = (req, res, next) => {
     description,
     price
   );
-  console.log(product);
+  // console.log(product);
   product
     .save()
     .then((result) => {
@@ -99,6 +102,7 @@ exports.getEditProduct = (req, res, next) => {
         role: req.session.loginrole,
         user: req.session.loginuser,
         Id: prodId,
+        id:req.session.user_id
       });
     })
     .catch((err) => {
@@ -126,6 +130,7 @@ exports.postEditProduct = (req, res, next) => {
         role: req.session.loginrole,
         user: req.session.loginuser,
         isAuthenticated: req.session.isLoggedIn,
+        id:req.session.user_id
       });
       Product.update(prodId, title, price, image, description);
       // res.redirect("/admin/products");
@@ -153,6 +158,7 @@ exports.getIndex = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
     user: req.session.loginuser,
+    id:req.session.user_id
   });
   console.log(req.session);
 };
@@ -163,6 +169,7 @@ exports.getGallery = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
     user: req.session.loginuser,
+    id:req.session.user_id
   });
 };
 exports.getBookings = (req, res, next) => {
@@ -173,9 +180,23 @@ exports.getBookings = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn,
         role: req.session.loginrole,
         user: req.session.loginuser,
+        id:req.session.user_id,
         products: product[0],
         // products: Product.fetchAll()[0][0],
       });
     })
     .catch((err) => console.log(err));
+};
+exports.getFeedback = (req, res, next) => {
+  Feedback.fetchAll().then((feed) => {
+    console.log(feed[0]);
+    res.render("admin/feedback", {
+      path: "admin/feedback",
+      isAuthenticated: req.session.isLoggedIn,
+      role: req.session.loginrole,
+      user: req.session.loginuser,
+      id:req.session.user_id,
+      feedback: feed[0],
+    });
+  });
 };

@@ -19,9 +19,10 @@ module.exports = class User {
     return db.execute("select * from users");
   }
   static findByEmail(email) {
-    return db.execute("select name,email,password from users where email=?", [
-      email,
-    ]);
+    return db.execute(
+      "select user_id,name,email,password from users where email=?",
+      [email]
+    );
   }
   static findPassword(email) {
     return db.execute("select password from users where email=?", [email]);
