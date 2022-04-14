@@ -1,0 +1,25 @@
+<%- include('../includes/header.ejs') %>
+<link rel="stylesheet" href="/css/cart.css">
+
+    </head>
+
+    <body>
+        <%- include('../includes/navigation.ejs') %>
+        <main>
+            <% if (orders.length <= 0) { %>
+                <h1>Nothing there!</h1>
+            <% } else { %>
+                <ul class="cart__item-list">
+                    <% orders.forEach(order => { %>
+                        <h1># <%= order.orderId %></h1>
+                        <li class="cart__item">
+                            <h1><%= order.product_title %></h1>
+                            <h2>quantity:<%=order.quantity%></h2>
+                             <h2>price: <%= order.product_price*order.quantity %></h2>
+                        </li>
+                            
+                    <% }); %>
+                </ul>
+            <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>

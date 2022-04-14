@@ -1,34 +1,40 @@
 const db = require("../util/database");
 
-module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
-    this.title = title;
-    this.imageUrl = imageUrl;
-    this.description = description;
-    this.price = parseInt(price);
+module.exports = class Order {
+  static getOrder(user_id) {
+    return db.execute("select id from orders where userId=(?)", [user_id]);
   }
-
-  save() {
+  static getOrders(order_id) {
+    var tokens = new Array(order_id.length).fill("?").join(",");
     return db.execute(
-      "insert into products (product_id,user_id,quantity,product_img,product_description) values(?,?,?,?)",
-      [this.title, this.price, this.imageUrl, this.description]
+      `select * from products inner join orderitems  on product_id=productId and orderId in (${tokens})`,
+      order_id
+    );
+  }
+  static getProductsById(product_id, cart_id) {
+    var tokens;
+
+    tokens = new Array(cart_id.length).fill("?").join(",");
+
+    return db.execute(
+      `select * from products inner join cartitems  on product_id=productId and product_id=(?) and cartId in (${tokens})`,
+      [product_id, ...cart_id]
+    );
+  }
+  static addOrder(user_id) {
+    return db.execute("insert into orders(userId) values(?)", [user_id]);
+  }
+  static addProduct(order_id, quant, pid) {
+    return db.execute(
+      "insert into orderitems(orderId,quantity,productId) values(?,?,?)",
+      [order_id, quant, pid]
     );
   }
 
-  static fetchAll() {
-    return db.execute("select * from products");
-  }
-  static findById(id) {
-    return db.execute("select * from products where product_id=?", [id]);
-  }
-
-  static update(id, title, price, imageUrl, description) {
+  static deleteProduct(cart_id, pid) {
     return db.execute(
-      "update products set product_title=? ,product_price=?,product_img=?,product_description=? where product_id=?",
-      [title, price, imageUrl, description, id]
+      "delete from cartItems where cartId=(?) and productId=(?)",
+      [cart_id, pid]
     );
-  }
-  static deleteOne(id) {
-    return db.execute("delete from products where product_id=?", [id]);
   }
 };

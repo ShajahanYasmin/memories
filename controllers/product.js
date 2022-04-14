@@ -1,6 +1,7 @@
 const Product = require("../models/product");
 const Feedback = require("../models/feedback");
 const Cart = require("../models/cart");
+const Order = require("../models/order");
 
 exports.getIndex = (req, res, next) => {
   res.render("shop/home", {
@@ -94,6 +95,53 @@ exports.deleteInCart = (req, res, next) => {
     .then(res.redirect("/cart"))
     .catch((err) => console.log(err));
 };
+
+exports.postOrder = (req, res, next) => {
+  const user_id = req.session.user_id;
+  Cart.getCart(user_id)
+    .then((cart) => {
+      const result = cart[0].map((a) => a.id);
+      return Cart.getProducts(result).then((products) => {
+        const product = products[0];
+        // console.log(products[0]);
+        Order.addOrder(user_id).then((row) => {
+          const cart_id = row[0].insertId;
+          product.map((p) =>
+            Order.addProduct(cart_id, p.quantity, p.productId)
+          );
+        });
+      });
+    })
+    .then((result) => {
+      Cart.getCart(user_id).then((cart) => {
+        const result = cart[0].map((a) => a.id);
+        return Cart.setProducts(result);
+      });
+    })
+    .then((result) => {
+      res.redirect("/orders");
+    })
+    .catch((err) => console.log(err));
+};
+exports.getOrders = (req, res, next) => {
+  const user_id = req.session.user_id;
+  Order.getOrder(user_id)
+    .then((order) => {
+      const result = order[0].map((a) => a.id);
+      return Order.getOrders(result).then((orders) => {
+        console.log(orders[0]);
+        res.render("shop/orders", {
+          orders: orders[0],
+          path: "/orders",
+          isAuthenticated: req.session.isLoggedIn,
+          role: req.session.loginrole,
+          user: req.session.loginuser,
+        });
+      });
+    })
+    .catch((err) => console.log(err));
+};
+
 exports.getFeedback = (req, res, next) => {
   res.render("shop/feedback", {
     path: "/feedback",

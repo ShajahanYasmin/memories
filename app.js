@@ -6,7 +6,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const db = require("./util/database");
 const cors = require("cors");
-
+const flash = require("connect-flash");
 const errorController = require("./controllers/error");
 
 const app = express();

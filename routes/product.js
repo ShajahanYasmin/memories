@@ -21,7 +21,8 @@ router.post("/feedback", productController.postFeedback);
 router.post("/add-to-cart", productController.addToCart);
 router.post("/cart-delete-item", productController.deleteInCart);
 
-// router.get("/orders", productController.getOrders);
+router.post("/orders", productController.postOrder);
+router.get("/orders",productController.getOrders);
 
 // router.get("/checkout", productController.getCheckout);
 

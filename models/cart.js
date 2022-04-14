@@ -42,4 +42,7 @@ module.exports = class Cart {
       [cart_id, pid]
     );
   }
+  static setProducts(cart_id) {
+    return db.execute("delete from cartItems where cartId=(?)", [...cart_id]);
+  }
 };
