@@ -10,7 +10,7 @@ exports.getProducts = (req, res, next) => {
         prods: product[0],
         role: req.session.loginrole,
         user: req.session.loginuser,
-        id:req.session.user_id
+        id: req.session.user_id,
         // products: Product.fetchAll()[0][0],
       });
     })
@@ -24,9 +24,8 @@ exports.getAddProduct = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     editing: false,
     role: req.session.loginrole,
-
-    user: req.session.user,
-    id:req.session.user_id,
+    user: req.session.loginuser,
+    id: req.session.user_id,
     hasError: false,
     errorMessage: null,
     validationErrors: [],
@@ -54,7 +53,7 @@ exports.postAddProduct = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
     user: req.session.loginuser,
-    id:req.session.user_id
+    id: req.session.user_id,
   });
 
   const product = new Product(
@@ -69,7 +68,7 @@ exports.postAddProduct = (req, res, next) => {
     .save()
     .then((result) => {
       // console.log(result);
-      console.log("Created Product");
+      // console.log("Created Product");
       res.redirect("/admin");
     })
     .catch((err) => {
@@ -78,14 +77,14 @@ exports.postAddProduct = (req, res, next) => {
 };
 exports.getEditProduct = (req, res, next) => {
   const editMode = req.query.edit;
-  console.log(editMode);
+  // console.log(editMode);
   if (!editMode) {
     return res.redirect("/");
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
     .then((product) => {
-      console.log(product[0][0].product_id);
+      // console.log(product[0][0].product_id);
       if (!product) {
         return res.redirect("/");
       }
@@ -102,7 +101,7 @@ exports.getEditProduct = (req, res, next) => {
         role: req.session.loginrole,
         user: req.session.loginuser,
         Id: prodId,
-        id:req.session.user_id
+        id: req.session.user_id,
       });
     })
     .catch((err) => {
@@ -130,8 +129,12 @@ exports.postEditProduct = (req, res, next) => {
         role: req.session.loginrole,
         user: req.session.loginuser,
         isAuthenticated: req.session.isLoggedIn,
-        id:req.session.user_id
+        id: req.session.user_id,
       });
+      // if (image) {
+      //   console.log(image.path);
+      //   image = image.path;
+      // }
       Product.update(prodId, title, price, image, description);
       // res.redirect("/admin/products");
     })
@@ -158,18 +161,18 @@ exports.getIndex = (req, res, next) => {
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
     user: req.session.loginuser,
-    id:req.session.user_id
+    id: req.session.user_id,
   });
-  console.log(req.session);
+  // console.log(req.session);
 };
 exports.getGallery = (req, res, next) => {
   // console.log(req.session);
   res.render("admin/gallery", {
-    path: "/gallery",
+    path: "admin/gallery",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
     user: req.session.loginuser,
-    id:req.session.user_id
+    id: req.session.user_id,
   });
 };
 exports.getBookings = (req, res, next) => {
@@ -180,7 +183,7 @@ exports.getBookings = (req, res, next) => {
         isAuthenticated: req.session.isLoggedIn,
         role: req.session.loginrole,
         user: req.session.loginuser,
-        id:req.session.user_id,
+        id: req.session.user_id,
         products: product[0],
         // products: Product.fetchAll()[0][0],
       });
@@ -189,14 +192,15 @@ exports.getBookings = (req, res, next) => {
 };
 exports.getFeedback = (req, res, next) => {
   Feedback.fetchAll().then((feed) => {
-    console.log(feed[0]);
+    // console.log(feed[0]);
     res.render("admin/feedback", {
       path: "admin/feedback",
       isAuthenticated: req.session.isLoggedIn,
       role: req.session.loginrole,
       user: req.session.loginuser,
-      id:req.session.user_id,
+      id: req.session.user_id,
       feedback: feed[0],
     });
   });
 };
+exports.getOrders = (req, res, next) => {};

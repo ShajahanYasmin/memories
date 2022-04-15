@@ -226,3 +226,7 @@ body {
 .show {
   display: inline-block;
 }
+.cart_image {
+  border-radius: 50%;
+  height: 3.4rem;
+}

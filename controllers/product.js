@@ -2,6 +2,10 @@ const Product = require("../models/product");
 const Feedback = require("../models/feedback");
 const Cart = require("../models/cart");
 const Order = require("../models/order");
+const session = require("express-session");
+const stripe = require("stripe")(
+  "sk_test_51KoMkJSJCf3gevk29fAVZoujlLUcJ6rFUd3LXIaJiWeVzmXbrHEqQD3s8JC52IC81gycNfEz0Z8cWqIbxbPgaH1M0089upIKp4"
+);
 
 exports.getIndex = (req, res, next) => {
   res.render("shop/home", {
@@ -11,7 +15,7 @@ exports.getIndex = (req, res, next) => {
     user: req.session.loginuser,
     id: req.session.user_id,
   });
-  console.log(req.session);
+  // console.log(req.session);
 };
 
 exports.getGallery = (req, res, next) => {
@@ -59,6 +63,7 @@ exports.getCart = (req, res, next) => {
 
 exports.addToCart = (req, res, next) => {
   const id = req.body.id;
+  // console.log(id);
   const user_id = req.session.user_id;
   let fetchedCart;
   let newQuantity = 1;
@@ -172,4 +177,58 @@ exports.postFeedback = (req, res, next) => {
     .catch((err) => {
       console.log(err);
     });
+};
+exports.getCheckout = (req, res, next) => {
+  let total = 0;
+  let product;
+  const user_id = req.session.user_id;
+  Cart.getCart(user_id)
+    .then((cart) => {
+      const result = cart[0].map((a) => a.id);
+      return Cart.getProducts(result)
+        .then((products) => {
+          product = products[0];
+          for (i of products[0]) total += i.product_price * i.quantity;
+          return stripe.checkout.sessions.create({
+            payment_method_types: ["card"],
+            line_items: product.map((p) => {
+              return {
+                name: p.product_title,
+                description: p.product_description,
+                amount: p.product_price * 100,
+                currency: "INR",
+                quantity: p.quantity,
+              };
+            }),
+            success_url:
+              req.protocol + "://" + req.get("host") + "/checkout/success", // => http://localhost:3000
+            cancel_url:
+              req.protocol + "://" + req.get("host") + "/checkout/cancel",
+            id: session.id,
+          });
+        })
+        .then((session) => {
+          res.render("shop/checkout", {
+            products: product,
+            path: "/checkout",
+            isAuthenticated: req.session.isLoggedIn,
+            role: req.session.loginrole,
+            user: req.session.loginuser,
+            totalSum: total,
+            sessionId: session.id,
+          });
+        });
+    })
+    .catch((err) => console.log(err));
+};
+exports.getBookForm = (req, res, next) => {
+  res.render("shop/booking_form", {
+    pageTitle: "feedback",
+    path: "/booking_form",
+    isAuthenticated: req.session.isLoggedIn,
+    role: req.session.loginrole,
+    user: req.session.loginuser,
+    id: req.session.user_id,
+    productId: req.body.id,
+  });
 };

@@ -15,7 +15,7 @@ app.use(express.static(path.join(__dirname, "public")));
 router.get("/", adminController.getIndex);
 router.get("/add-product", isAuth, adminController.getAddProduct);
 
-router.get("/bookings", adminController.getBookings);
+// router.get("/bookings", adminController.getBookings);
 
 router.get("/gallery", adminController.getGallery);
 
@@ -23,6 +23,7 @@ router.get("/gallery", adminController.getGallery);
 
 router.get("/products", adminController.getProducts);
 router.get("/feedback", adminController.getFeedback);
+router.get("/orders", adminController.getOrders);
 router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
 router.post("/edit-product", isAuth, adminController.postEditProduct);
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);

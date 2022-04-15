@@ -16,34 +16,18 @@
             >Home  Page
           </a>
         </li>
-        <li class="nav__item">
-          <a
-            class="<%= path === 'admin/bookings' ? 'active' : '' %> nav__link"
-            href="/bookings"
-            
-            >Bookings
-          </a>
-        </li>
+        
 
         <li class="nav__item">
           <a
             class="<%= path === 'admin/gallery' ? 'active' : '' %> nav__link"
-            href="/gallery"
+            href="./gallery"
             
             >Gallery
           </a>
         </li>
 
-        <li class="nav__item">
-          <a
-            class="<%= path === 'admin/feedback' ? 'active' : '' %> nav__link"
-            href="/feedback"
-            
-            >Feedback
-          </a>
-        </li>
-
-       
+        
         <% if(isAuthenticated && role==='admin') {%>
           <li class="nav__item">
             <a class="<%= path === 'admin/add-product' ? 'active' : '' %> nav__link" href="./add-product">Add Product

@@ -23,12 +23,12 @@ exports.postLogin = (req, res, next) => {
         return res.redirect("/login");
       }
       if (log.password === password) {
-        console.log(log);
+        // console.log(log);
         req.session.isLoggedIn = true;
         req.session.loginuser = log["name"];
         req.session.user_id = log["user_id"];
         req.session.loginrole = "user";
-        console.log(req.session.user);
+        // console.log(req.session.user);
         return res.redirect("/user");
       }
       return res.redirect("/login");
@@ -41,7 +41,7 @@ exports.postAdminLogin = (req, res, next) => {
   Admin.findByAdmin(adminemail)
     .then((user) => {
       const log = user[0][0];
-      console.log(log);
+      // console.log(log);
       if (!log) {
         return res.redirect("/admin");
       }
@@ -99,7 +99,7 @@ exports.postRegister = (req, res, next) => {
       const user = new User(name, email, password);
       user.save();
       User.findByEmail(email).then((user) => {
-        console.log(user[0][0].user_id);
+        // console.log(user[0][0].user_id);
         // console.log("session", id);
         Cart.addCart(user[0][0].user_id).then();
       });

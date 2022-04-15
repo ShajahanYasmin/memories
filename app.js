@@ -6,6 +6,7 @@ const bodyParser = require("body-parser");
 const multer = require("multer");
 const db = require("./util/database");
 const cors = require("cors");
+const stripe = require("stripe");
 const flash = require("connect-flash");
 const errorController = require("./controllers/error");
 
@@ -32,7 +33,7 @@ const fileFilter = (req, file, cb) => {
 
 app.set("view engine", "ejs");
 app.set("views", "views");
-
+app.use(flash());
 app.use(
   multer({
     dest: "images",

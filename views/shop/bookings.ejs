@@ -21,11 +21,10 @@
               </h4>
               <div class="card__details">
                 <ul>
-                  <li>3 day tour</li>
-                  <li>Up to 30 people</li>
-                  <li>2 tour guides</li>
-                  <li>Sleep in cozy hotels</li>
-                  <li>Difficulty:easy</li>
+                  <% p.product_description.split(".").forEach(p => { console.log(p,"4");%>
+                  <li><%=p%></li> 
+                    <% })%>
+                  
                 </ul>
               </div>
             </div>
@@ -37,7 +36,8 @@
                 </div>
                 <% if (isAuthenticated) { %>
                   
-                  <form action="/add-to-cart" method="post">
+                  <!-- <a href="./book_form" class="btn">Book now !</a> -->
+                  <form action="/book_form" method="post">
                     <input type="hidden" name="id" value="<%=p.product_id%>">
                     <button class="btn" type="submit">Book now!</button>
                   </form>
