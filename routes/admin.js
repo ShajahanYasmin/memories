@@ -27,7 +27,8 @@ router.get("/orders", adminController.getOrders);
 router.get("/edit-product/:productId", isAuth, adminController.getEditProduct);
 router.post("/edit-product", isAuth, adminController.postEditProduct);
 router.post("/delete-product", isAuth, adminController.postDeleteProduct);
-
+router.post('/accept-order',adminController.acceptOrder);
+router.post('/reject-order',adminController.rejectOrder);
 // /admin/add-product => POST
 router.post(
   "/add-product",

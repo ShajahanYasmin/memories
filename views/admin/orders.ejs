@@ -59,19 +59,22 @@
                 
                             <td>
                                 <% if(p.approval=="pending") {%>
-                                <form action="/cart-delete-item" method="POST">
-                                    <input type="hidden" value="<%= p.id %>" name="productId">
+                                <form action="./accept-order" method="POST">
+                                    <input type="hidden" value="<%= p.id %>" name="orderId1">
                                     <button class="btn danger" type="submit">Accept</button>
                                 </form>
                                 <br>
-                                <form action="/cart-delete-item" method="POST">
-                                    <input type="hidden" value="<%= p.id%>" name="productId">
+                                <form action="./reject-order" method="POST">
+                                    <input type="hidden" value="<%= p.id%>" name="orderId2">
                                     <button class="btn danger" type="submit">Reject</button>
                                 </form>
                                 <%}%>
                                 <% if(p.approval=="approved") {%>
                                     <span class="btn">Accepted</span>
                                     <%}%>
+                                    <% if(p.approval=="rejected") {%>
+                                        <span class="btn">rejected</span>
+                                        <%}%>
                             </td>
                         </tr>
                         <%})%>

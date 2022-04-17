@@ -29,6 +29,18 @@ module.exports = class Order {
   static addOrder(user_id) {
     return db.execute("insert into orders(userId) values(?)", [user_id]);
   }
+  static addAccept(id) {
+    return db.execute(
+      "update orderitems set approval='approved' where id=(?)",
+      [id]
+    );
+  }
+  static addReject(id) {
+    return db.execute(
+      "update orderitems set approval='rejected' where id=(?)",
+      [id]
+    );
+  }
   //
   static addProduct(
     order_id,

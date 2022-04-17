@@ -12,6 +12,7 @@ exports.getLogin = (req, res, next) => {
     role: req.session.loginrole,
     user: req.session.loginuser,
     id: req.session.user_id,
+    message: req.flash("message"),
   });
 };
 exports.postLogin = (req, res, next) => {
@@ -20,6 +21,7 @@ exports.postLogin = (req, res, next) => {
     .then((user) => {
       const log = user[0][0];
       if (!log) {
+        req.flash("message", "Invalid user");
         return res.redirect("/login");
       }
       if (log.password === password) {
@@ -28,6 +30,7 @@ exports.postLogin = (req, res, next) => {
         req.session.loginuser = log["name"];
         req.session.user_id = log["user_id"];
         req.session.loginrole = "user";
+        req.flash("message", "Login Successful");
         // console.log(req.session.user);
         return res.redirect("/user");
       }
@@ -66,7 +69,7 @@ exports.getRegister = (req, res, next) => {
     path: "/register",
     isAuthenticated: req.session.isLoggedIn,
     role: req.session.loginrole,
-    message: undefined,
+    message: req.flash("message"),
     user: req.session.loginuser,
     id: req.session.user_id,
   });
@@ -81,17 +84,19 @@ exports.postRegister = (req, res, next) => {
   results
     .then(([rows, fieldData]) => {
       if (rows.length > 0) {
+        req.flash("message", "Email already in use");
         return res.render("auth/register", {
           path: "/register",
-          message: "That email is already in use",
+          message: req.flash("message"),
           isAuthenticated: req.session.isLoggedIn,
           role: req.session.loginrole,
           user: req.session.loginuser,
         });
       } else if (password != confirmPassword) {
+        req.flash("message", "Passwords did not match");
         return res.render("auth/register", {
           path: "/register",
-          message: "Passwords did not match",
+          message: req.flash("message"),
           isAuthenticated: req.session.isLoggedIn,
           role: req.session.loginrole,
           user: req.session.loginuser,
@@ -99,13 +104,17 @@ exports.postRegister = (req, res, next) => {
         });
       }
       const user = new User(name, email, password);
-      user.save();
-      User.findByEmail(email).then((user) => {
-        // console.log(user[0][0].user_id);
-        // console.log("session", id);
-        Cart.addCart(user[0][0].user_id).then();
+      user.save().then(() => {
+        User.findByEmail(email).then((user) => {
+          // console.log(user[0]);
+          // console.log("session", id);
+          Cart.addCart(user[0][0].user_id).then();
+        });
       });
     })
-    .then(res.redirect("/login"))
+    .then(() => {
+      req.flash("message", "Registration Successful");
+      res.redirect("/login");
+    })
     .catch((err) => console.log(err));
 };

@@ -147,7 +147,7 @@ exports.postDeleteProduct = (req, res, next) => {
   const prodId = req.body.productId;
   Product.deleteOne(prodId)
     .then(() => {
-      console.log("DESTROYED PRODUCT");
+      req.flash("message", "DESTROYED PRODUCT");
       res.redirect("/admin/products");
     })
     .catch((err) => {
@@ -219,5 +219,19 @@ exports.getOrders = (req, res, next) => {
         order: order[0],
       });
     })
+    .catch((err) => console.log(err));
+};
+exports.acceptOrder = (req, res, next) => {
+  // console.log(req.body.orderId1);
+  const id = req.body.orderId1;
+  Order.addAccept(id)
+    .then(() => res.redirect("./orders"))
+    .catch((err) => console.log(err));
+};
+exports.rejectOrder = (req, res, next) => {
+  // console.log(req.body.orderId2);
+  const id = req.body.orderId2;
+  Order.addReject(id)
+    .then(() => res.redirect("./orders"))
     .catch((err) => console.log(err));
 };

@@ -9,6 +9,12 @@
 </head>
 <body>
       <%- include("../includes/navigation") %>
+
+      <% if(message.length>0){ %>
+        <div class="alert">
+            <%= message %>
+        </div>
+        <% }%>
       <div class="wrap">
     <div class="operations">
       <div class="operations__tab--container">
