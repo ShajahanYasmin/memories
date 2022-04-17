@@ -11,6 +11,11 @@ module.exports = class Order {
       order_id
     );
   }
+  static getAdminOrders() {
+    return db.execute(
+      "select * from products inner join orderitems  on product_id=productId and status='yes' "
+    );
+  }
   static getProductsById(product_id, cart_id) {
     var tokens;
 
@@ -24,10 +29,21 @@ module.exports = class Order {
   static addOrder(user_id) {
     return db.execute("insert into orders(userId) values(?)", [user_id]);
   }
-  static addProduct(order_id, quant, pid) {
+  //
+  static addProduct(
+    order_id,
+    quant,
+    pid,
+    address,
+    phno,
+    name,
+    eventdate,
+    extra
+  ) {
+    // const createdAt = moment();
     return db.execute(
-      "insert into orderitems(orderId,quantity,productId) values(?,?,?)",
-      [order_id, quant, pid]
+      "insert into orderitems(orderId,quantity,productId,address, phno, name, eventdate, extra,status) values(?,?,?,?,?,?,?,?,'yes')",
+      [order_id, quant, pid, address, phno, name, eventdate, extra]
     );
   }
 

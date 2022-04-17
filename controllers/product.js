@@ -14,6 +14,7 @@ exports.getIndex = (req, res, next) => {
     role: req.session.loginrole,
     user: req.session.loginuser,
     id: req.session.user_id,
+    message: req.flash("message"),
   });
   // console.log(req.session);
 };
@@ -49,6 +50,7 @@ exports.getCart = (req, res, next) => {
     .then((cart) => {
       const result = cart[0].map((a) => a.id);
       return Cart.getProducts(result).then((prodcuts) => {
+        // console.log(prodcuts[0]);
         res.render("shop/cart", {
           cart: prodcuts[0],
           path: "/cart",
@@ -63,6 +65,12 @@ exports.getCart = (req, res, next) => {
 
 exports.addToCart = (req, res, next) => {
   const id = req.body.id;
+  const name = req.body.client_name;
+  const mail = req.body.client_email;
+  const phone = req.body.client_phone;
+  const eventdate = req.body.checkin;
+  const address = req.body.client_address;
+  const message = req.body.client_message;
   // console.log(id);
   const user_id = req.session.user_id;
   let fetchedCart;
@@ -82,7 +90,16 @@ exports.addToCart = (req, res, next) => {
           return Cart.updateProduct(result, newQuantity, product[0].product_id);
         }
         return Product.findById(id).then((product) => {
-          Cart.addProduct(result, newQuantity, product[0][0].product_id);
+          Cart.addProduct(
+            result,
+            newQuantity,
+            product[0][0].product_id,
+            address,
+            phone,
+            name,
+            eventdate,
+            message
+          );
         });
       });
     })
@@ -112,7 +129,16 @@ exports.postOrder = (req, res, next) => {
         Order.addOrder(user_id).then((row) => {
           const cart_id = row[0].insertId;
           product.map((p) =>
-            Order.addProduct(cart_id, p.quantity, p.productId)
+            Order.addProduct(
+              cart_id,
+              p.quantity,
+              p.productId,
+              p.address,
+              p.phno,
+              p.name,
+              p.eventdate,
+              p.extra
+            )
           );
         });
       });
@@ -134,7 +160,7 @@ exports.getOrders = (req, res, next) => {
     .then((order) => {
       const result = order[0].map((a) => a.id);
       return Order.getOrders(result).then((orders) => {
-        console.log(orders[0]);
+        // console.log(orders[0]);
         res.render("shop/orders", {
           orders: orders[0],
           path: "/orders",

@@ -57,6 +57,7 @@ body {
   );
   background-size: cover;
   height: 100vh;
+  position: relative;
 }
 
 .u-center-text {
@@ -229,4 +230,14 @@ body {
 .cart_image {
   border-radius: 50%;
   height: 3.4rem;
+}
+.alert {
+  position: absolute;
+  right: 0;
+  top: 70px;
+  background-color: #2980b9;
+  font-size: 18px;
+  color: white;
+  width: 200px;
+  padding: 20px;
 }

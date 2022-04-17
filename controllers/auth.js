@@ -49,6 +49,7 @@ exports.postAdminLogin = (req, res, next) => {
         req.session.isLoggedIn = true;
         req.session.loginuser = "admin";
         req.session.loginrole = "admin";
+        req.flash("message", "login successully");
         return res.redirect("/admin");
       }
       return res.redirect("/login");
@@ -56,6 +57,7 @@ exports.postAdminLogin = (req, res, next) => {
     .catch((err) => console.log(err));
 };
 exports.postLogout = (req, res, next) => {
+  req.flash("message", "logout successful");
   req.session.destroy(() => res.redirect("/"));
 };
 

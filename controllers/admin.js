@@ -1,5 +1,7 @@
+const flash = require("connect-flash/lib/flash");
 const Feedback = require("../models/feedback");
 const Product = require("../models/product");
+const Order = require("../models/order");
 // const { validationResult } = require("express-validator");
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -162,6 +164,7 @@ exports.getIndex = (req, res, next) => {
     role: req.session.loginrole,
     user: req.session.loginuser,
     id: req.session.user_id,
+    message: req.flash("message"),
   });
   // console.log(req.session);
 };
@@ -203,4 +206,18 @@ exports.getFeedback = (req, res, next) => {
     });
   });
 };
-exports.getOrders = (req, res, next) => {};
+exports.getOrders = (req, res, next) => {
+  Order.getAdminOrders()
+    .then((order) => {
+      // console.log(order[0]);
+      res.render("admin/orders", {
+        path: "admin/orders",
+        isAuthenticated: req.session.isLoggedIn,
+        role: req.session.loginrole,
+        user: req.session.loginuser,
+        id: req.session.user_id,
+        order: order[0],
+      });
+    })
+    .catch((err) => console.log(err));
+};

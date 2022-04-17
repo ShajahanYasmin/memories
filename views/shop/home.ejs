@@ -4,5 +4,10 @@
 <body>
 
 <%- include("../includes/navigation") %>
+<% if(message.length>0){ %>
+    <div class="alert">
+        <%= message %>
+    </div>
+    <% }%>
 <div class="section-hero">&nbsp;</div>
 <%- include("../includes/end") %>

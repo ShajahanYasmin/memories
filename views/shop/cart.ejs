@@ -1,35 +1,61 @@
 <%- include('../includes/header.ejs') %>
     <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/table.css">
     </head>
 
     <body>
         <%- include('../includes/navigation.ejs') %>
         <main>
             <% if (cart!==null && cart.length > 0 ) { %>
-                <ul class="cart__item-list">
-                    <% cart.forEach(p => { %>
-                        <li class="cart__item">
-                            
-                                <img  class="cart_img" src="<%= p.product_img%>"/>
-                            
-                            <h1><%= p.product_title %></h1>
-                            <h2>quantity:<%=p.quantity%></h2>
-                             <h2>price: <%= p.product_price*p.quantity %></h2>
-                            <form action="/cart-delete-item" method="POST">
-                                <input type="hidden" value="<%= p.product_id %>" name="productId">
-                                <button class="btn danger" type="submit">Delete</button>
-                            </form>
-                        </li>
-                    <% }) %>
-                </ul>
-                <hr>
-                <!-- <div><h2 class="cart__item centered">total price:<%=cart.totalPrice%></h2></div> -->
+                <table class="container tables" border="1">
+                        <tr>
+                            <th class="order-number">Order</th>
+                            <th class="order-image">title</th>
+                            <th class="order-image">image</th>
+                            <th class="order-date">Date</th>
+                            <th class="order-status">Payment Status</th>
+                            <th class="order-price">Total</th>
+                            <th class="order-actions">Actions</th>
+                        </tr>
+                   
+                        <% cart.forEach(p => { %>
+                        <tr class="order">
+                            <td class="order-number" data-title="Order">
+                                <a href="*">#<%=p.id%></a>
+                            </td>
+                            <td  data-title="img">
+                                <img class="order-img" src=" <%=p.product_img%>" height="100px"/>
+                              </td>
+                            <td class="order-date" data-title="Date">
+                                <%=p.product_title%>
+                             </td>
+                             
+                            <td class="order-date" data-title="Date">
+                               <date><%=p.eventdate.toLocaleDateString()%></date>
+                            </td>
+                
+                            <td class="order-status" data-title="Status">
+                                Pending
+                            </td>
+                
+                            <td class="order-total" data-title="Total">
+                                <span class="amount"><%=p.product_price%></span> 
+                            </td>
+                
+                            <td class="order-actions" data-title="Action">
+                                <form action="/cart-delete-item" method="POST">
+                                    <input type="hidden" value="<%= p.product_id %>" name="productId">
+                                    <button class="btn danger" type="submit">Delete</button>
+                                </form>
+                            </td>
+                        </tr>
+                        <%})%>
+                   
+                </table>
                 <div class="centered">
-                    <!-- <form action="/orders" method="POST">
-                        <button type="submit" class="btn">Order Now!</button>
-                    </form> -->
-                    <a class="btn" href="/checkout">Order Now!</a>
-                </div>
+                    
+                    <a class="btn" href="/checkout">Book Now!</a>
+                </div> 
             <% } else { %>
                 <h1>No Products in Cart!</h1>
             <% } %>

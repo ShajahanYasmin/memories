@@ -1,5 +1,5 @@
 const db = require("../util/database");
-
+const moment = require("moment");
 module.exports = class Cart {
   static getCart(user_id) {
     return db.execute("select id from carts where userId=(?)", [user_id]);
@@ -24,10 +24,20 @@ module.exports = class Cart {
   static addCart(user_id) {
     return db.execute("insert into carts(userId) values(?)", [user_id]);
   }
-  static addProduct(cart_id, quant, pid) {
+  static addProduct(
+    cart_id,
+    quant,
+    pid,
+    address,
+    phno,
+    name,
+    eventdate,
+    extra
+  ) {
+    // const createdAt = moment();
     return db.execute(
-      "insert into cartitems(cartId,quantity,productId) values(?,?,?)",
-      [...cart_id, quant, pid]
+      "insert into cartitems(cartId,quantity,productId,address, phno, name, eventdate, extra) values(?,?,?,?,?,?,?,?)",
+      [...cart_id, quant, pid, address, phno, name, eventdate, extra]
     );
   }
   static updateProduct(cart_id, quant, pid) {

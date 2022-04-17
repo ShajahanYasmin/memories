@@ -8,16 +8,9 @@ div.elem-group {
   margin: 20px 0;
 }
 
-div.elem-group.inlined {
-  width: 49%;
-
-  float: left;
-  margin-left: 1%;
-}
-
 label {
   display: block;
-  font-family: "Nanum Gothic";
+  font-family: inherit;
   padding-bottom: 10px;
   font-size: 1.25em;
 }
@@ -29,7 +22,7 @@ textarea {
   border: 2px solid #777;
   box-sizing: border-box;
   font-size: 1.25em;
-  font-family: "Nanum Gothic";
+  font-family: inherit;
   width: 100%;
   padding: 10px;
 }
@@ -40,7 +33,7 @@ div.elem-group.inlined input {
 }
 
 textarea {
-  height: 250px;
+  height: 120px;
 }
 
 hr {
@@ -53,7 +46,7 @@ button {
   border: none;
   color: white;
   font-size: 1.25em;
-  font-family: "Nanum Gothic";
+  font-family: inherit;
   border-radius: 4px;
   cursor: pointer;
 }

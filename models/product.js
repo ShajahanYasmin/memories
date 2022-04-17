@@ -26,6 +26,7 @@ module.exports = class Product {
   }
 
   static update(id, title, price, imageUrl, description) {
+    
     return db.execute(
       "update products set product_title=? ,product_price=?,product_img=?,product_description=? where product_id=?",
       [title, price, imageUrl, description, id]

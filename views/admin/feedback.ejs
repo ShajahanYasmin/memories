@@ -1,22 +1,24 @@
 <%- include("./includes/header") %> 
+<link rel="stylesheet" href="/css/table.css">
 </head>
 <body>
 
 <%- include("./includes/navigation") %>
-<table>
+<% if (feedback.length > 0) { %>
+<table class="container tables" border="1">
     <tr>
       <th>S.no</th>
       <th>Email</th>
       <th>Feedback</th>
      
     </tr>
-    <% if (feedback.length > 0) { %>
-        <% feedback.forEach(p => { %>
+    
+      <% feedback.forEach(p => { %>
    
     <tr>
-      <tr><%=p.id%></tr>
-      <tr><%=p.email_id%></tr>
-      <tr><%=p.content%></tr>
+      <td><%=p.id%></td>
+      <td><%=p.email_id%></td>
+      <td><%=p.content%></td>
     </tr>
     <% }) }else{%>
    <h2 > No feedback found</h2>

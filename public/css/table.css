@@ -1,0 +1,43 @@
+a {
+  color: #28acd7;
+  text-decoration: none;
+}
+.tables {
+  border-collapse: collapse;
+  border-spacing: 0;
+  /* max-width: 1600px; */
+  width: 100%;
+  font-size: 14px;
+  /* padding: px; */
+}
+
+td {
+  padding: 8px;
+}
+th {
+  padding: 0 37px;
+}
+
+/* .my_account_orders {
+  border-collapse: collapse;
+  border-spacing: 0;
+  max-width: 1600px;
+  width: 100%;
+  font-size: 18px;
+}
+
+.my_account_orders th {
+  text-align: left;
+}
+
+tr {
+  border-bottom: 1px solid #ccc;
+}
+
+th,
+td {
+  padding: 30px;
+}
+order-img {
+  height: 3.5rem;
+} */

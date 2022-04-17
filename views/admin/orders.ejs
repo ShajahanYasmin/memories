@@ -1,0 +1,85 @@
+<%- include('../includes/header.ejs') %>
+    <link rel="stylesheet" href="/css/cart.css">
+    <link rel="stylesheet" href="/css/table.css">
+    </head>
+
+    <body>
+        <%- include('./includes/navigation.ejs') %>
+        <main>
+            <% if (order!==null && order.length > 0 ) { %>
+                <table class="container tables" border="1">
+                        <tr>
+                            <th>Order</th>
+                            <th>Order Time </th>
+                            <th>Customer Name</th>
+                            <th>image</th>
+                            <th>title</th>
+                            <th>Event Date</th>
+                            <th>Address</th>
+                            <th>Phone number</th>
+                            <th>Payment Status</th>
+                            <th>Total</th>
+                            <th>Actions</th>
+                        </tr>
+                   
+                        <% order.forEach(p => { %>
+                        <tr class="order">
+                            <td>
+                                <a>#<%=p.id%></a>
+                            </td>
+                            <td>
+                                <%=p.orderTime.toLocaleDateString()%>
+                            </td>
+                            <td>
+                                <%=p.name%>
+                             </td>
+                            <td >
+                                <img src=" /<%=p.product_img%>" height="70px"/>
+                              </td>
+                            <td>
+                                <%=p.product_title%>
+                             </td>
+                             
+                            <td >
+                               <date><%=p.eventdate.toLocaleDateString()%></date>
+                            </td>
+                            <td >
+                               <%=p.address%>
+                             </td>
+                             <td >
+                                <%=p.phno%>
+                              </td>
+                            <td >
+                                Paid
+                            </td>
+                
+                            <td>
+                                <span class="amount"><%=p.product_price%></span> 
+                            </td>
+                
+                            <td>
+                                <% if(p.approval=="pending") {%>
+                                <form action="/cart-delete-item" method="POST">
+                                    <input type="hidden" value="<%= p.id %>" name="productId">
+                                    <button class="btn danger" type="submit">Accept</button>
+                                </form>
+                                <br>
+                                <form action="/cart-delete-item" method="POST">
+                                    <input type="hidden" value="<%= p.id%>" name="productId">
+                                    <button class="btn danger" type="submit">Reject</button>
+                                </form>
+                                <%}%>
+                                <% if(p.approval=="approved") {%>
+                                    <span class="btn">Accepted</span>
+                                    <%}%>
+                            </td>
+                        </tr>
+                        <%})%>
+                   
+                </table>
+               
+            <% } else { %>
+                <h1>No Products in Cart!</h1>
+            <% } %>
+        </main>
+        <%- include('../includes/end.ejs') %>
