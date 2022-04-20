@@ -29,6 +29,7 @@ module.exports = class Cart {
     quant,
     pid,
     address,
+    email,
     phno,
     name,
     eventdate,
@@ -36,8 +37,8 @@ module.exports = class Cart {
   ) {
     // const createdAt = moment();
     return db.execute(
-      "insert into cartitems(cartId,quantity,productId,address, phno, name, eventdate, extra) values(?,?,?,?,?,?,?,?)",
-      [...cart_id, quant, pid, address, phno, name, eventdate, extra]
+      "insert into cartitems(cartId,quantity,productId,address, email,phno, name, eventdate, extra) values(?,?,?,?,?,?,?,?,?)",
+      [...cart_id, quant, pid, address, email,phno, name, eventdate, extra]
     );
   }
   static updateProduct(cart_id, quant, pid) {

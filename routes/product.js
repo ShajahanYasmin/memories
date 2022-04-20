@@ -7,7 +7,7 @@ const productController = require("../controllers/product");
 const router = express.Router();
 
 router.get("/", productController.getIndex);
-router.get("/user", productController.getIndex);
+// router.get("/user", productController.getIndex);
 // router.get("/admin", productController.getIndex);
 
 router.get("/bookings", productController.getBookings);

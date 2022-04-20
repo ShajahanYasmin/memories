@@ -16,6 +16,9 @@ module.exports = class Order {
       "select * from products inner join orderitems  on product_id=productId and status='yes' "
     );
   }
+  static getEmail(orderId) {
+    return db.execute("select email from orderitems  where id=(?) ", [orderId]);
+  }
   static getProductsById(product_id, cart_id) {
     var tokens;
 
@@ -47,6 +50,7 @@ module.exports = class Order {
     quant,
     pid,
     address,
+    email,
     phno,
     name,
     eventdate,
@@ -54,8 +58,8 @@ module.exports = class Order {
   ) {
     // const createdAt = moment();
     return db.execute(
-      "insert into orderitems(orderId,quantity,productId,address, phno, name, eventdate, extra,status) values(?,?,?,?,?,?,?,?,'yes')",
-      [order_id, quant, pid, address, phno, name, eventdate, extra]
+      "insert into orderitems(orderId,quantity,productId,address,email, phno, name, eventdate, extra,status) values(?,?,?,?,?,?,?,?,?,'yes')",
+      [order_id, quant, pid, address, email, phno, name, eventdate, extra]
     );
   }
 

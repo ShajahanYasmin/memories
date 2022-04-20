@@ -2,6 +2,32 @@ const flash = require("connect-flash/lib/flash");
 const Feedback = require("../models/feedback");
 const Product = require("../models/product");
 const Order = require("../models/order");
+const nodemailer = require("nodemailer");
+let mailTransporter = nodemailer.createTransport({
+  service: "gmail",
+  auth: {
+    user: "digitalmemories124@gmail.com",
+    pass: "Digital@123",
+  },
+});
+let details = (name, text) => {
+  return {
+    from: "digitalmemories124@gmail.com",
+    to: name,
+    subject: "mail from bookings of photography studio Digital memories",
+    text: text,
+  };
+};
+// mailTransporter.sendMail(
+//   details("mdyasmin0210@gmail.com", "<h1>Hello</h1>"),
+//   (err) => {
+//     if (err) {
+//       console.log("it has an error", err);
+//     } else {
+//       console.log("email has sent");
+//     }
+//   }
+// );
 // const { validationResult } = require("express-validator");
 exports.getProducts = (req, res, next) => {
   Product.fetchAll()
@@ -224,14 +250,55 @@ exports.getOrders = (req, res, next) => {
 exports.acceptOrder = (req, res, next) => {
   // console.log(req.body.orderId1);
   const id = req.body.orderId1;
+  console.log(id);
   Order.addAccept(id)
-    .then(() => res.redirect("./orders"))
+    .then(() => {
+      Order.getEmail(id).then((email) => {
+        console.log(email[0][0].email);
+        const mail = email[0][0].email;
+        mailTransporter.sendMail(
+          details(
+            mail,
+            "Your booking is accepted .please contact @9381034145 for further communication"
+          ),
+          (err) => {
+            if (err) {
+              console.log("it has an error", err);
+            } else {
+              console.log("email has sent");
+            }
+          }
+        );
+
+        res.redirect("./orders");
+      });
+    })
     .catch((err) => console.log(err));
 };
 exports.rejectOrder = (req, res, next) => {
   // console.log(req.body.orderId2);
   const id = req.body.orderId2;
   Order.addReject(id)
-    .then(() => res.redirect("./orders"))
+    .then(() => {
+      Order.getEmail(id).then((email) => {
+        console.log(email[0][0].email);
+        const mail = email[0][0].email;
+        mailTransporter.sendMail(
+          details(
+            mail,
+            "Your booking is rejected .please contact @9381034145 for further communication"
+          ),
+          (err) => {
+            if (err) {
+              console.log("it has an error", err);
+            } else {
+              console.log("email has sent");
+            }
+          }
+        );
+
+        res.redirect("./orders");
+      });
+    })
     .catch((err) => console.log(err));
 };

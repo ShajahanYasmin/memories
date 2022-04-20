@@ -32,7 +32,7 @@ exports.postLogin = (req, res, next) => {
         req.session.loginrole = "user";
         req.flash("message", "Login Successful");
         // console.log(req.session.user);
-        return res.redirect("/user");
+        return res.redirect("/");
       }
       return res.redirect("/login");
     })

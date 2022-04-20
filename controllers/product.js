@@ -66,7 +66,7 @@ exports.getCart = (req, res, next) => {
 exports.addToCart = (req, res, next) => {
   const id = req.body.id;
   const name = req.body.client_name;
-  const mail = req.body.client_email;
+  const email = req.body.client_email;
   const phone = req.body.client_phone;
   const eventdate = req.body.checkin;
   const address = req.body.client_address;
@@ -95,6 +95,7 @@ exports.addToCart = (req, res, next) => {
             newQuantity,
             product[0][0].product_id,
             address,
+            email,
             phone,
             name,
             eventdate,
@@ -134,6 +135,8 @@ exports.postOrder = (req, res, next) => {
               p.quantity,
               p.productId,
               p.address,
+
+              p.email,
               p.phno,
               p.name,
               p.eventdate,
