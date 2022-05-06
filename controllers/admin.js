@@ -259,7 +259,7 @@ exports.acceptOrder = (req, res, next) => {
         mailTransporter.sendMail(
           details(
             mail,
-            "Your booking is accepted .please contact @9381034145 for further communication"
+            "Your booking is accepted .please contact @9381034145,  for further communication"
           ),
           (err) => {
             if (err) {
@@ -286,7 +286,7 @@ exports.rejectOrder = (req, res, next) => {
         mailTransporter.sendMail(
           details(
             mail,
-            "Your booking is rejected .please contact @9381034145 for further communication"
+            "Your booking is rejected .Your paid amount will be refunded in 2-3 days"
           ),
           (err) => {
             if (err) {
