@@ -245,3 +245,28 @@ body {
   font-size: 16px;
   color: #ba265d;
 }
+/* .section-card {
+  display: grid;
+  grid-template-columns: 100px 100px;
+} */
+.card-1 {
+  position: relative;
+  font-size: 1.6rem;
+  padding: 1.8rem;
+  box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.6rem;
+  padding: 0.5rem;
+}
+.marque {
+  position: relative;
+
+  font-size: 1.6rem;
+  padding: 1.8rem;
+  /* box-shadow: 0 1.5rem 4rem rgba(0, 0, 0, 0.15); */
+  background-color: #fff;
+}

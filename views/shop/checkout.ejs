@@ -15,8 +15,9 @@
                 <% }) %>
             </ul>
             <div class="centered">
-                <h2>Total: <%= totalSum %></h2>
+                <h2>Total: <%= totalSum*0.25 %></h2>
             </div>
+            
             <div class="centered">
                 <button id="order-btn" class="btn">Book</button>
                 <script src="https://js.stripe.com/v3/"></script>
@@ -29,6 +30,10 @@
                         });
                     });
                 </script>
+            </div>
+            <div class="marque">
+
+                <marquee>only 25% at the time of booking </marquee>
             </div>
         </main>
         <%- include('../includes/end.ejs') %>
